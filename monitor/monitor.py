@@ -1,4 +1,5 @@
 import serial
+import time
 
 PORT = '/dev/ttyACM0'
 BAUD = 57600
