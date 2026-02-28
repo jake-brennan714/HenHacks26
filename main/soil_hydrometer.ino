@@ -4,10 +4,14 @@ struct DHTPair {
 };
 
 DHTPair* getDHT();
-int calculateState(int prev_state, int soil_moisture, DHTPair* dhtp);
+float calculateState(float prev_state, int soil_moisture, DHTPair* dhtp);
 
 #include "Adafruit_Sensor.h"
 #include "DHT.h"
+
+#define MOISTURE_WEIGHT 0.5
+#define TEMPERATURE_WEIGHT 0.3
+#define HUMIDITY_WEIGHT 0.2
 
 #define HYDROMETER 0
 #define DHTPIN 2
@@ -65,36 +69,49 @@ DHTPair* getDHT() {
   // Serial.println(t);
 }
 
-int calculateState(int prev_state, int soil_moisture,
+float calculateState(float prev_state, int soil_moisture,
 DHTPair* dhtp) {
-  int state = prev_state;
+  float state = prev_state;
+  float soil_moisture_delta = 0;
   if (soil_moisture < 300) {
-    // Soil is dry.
+    soil_moisture_delta = (float) map(soil_moisture, 0, 300, -1, 0);
   } else if (soil_moisture > 700) {
-    // Soil is oversaturated
-  } else {
-    // Soil is humid
+    soil_moisture_delta = (float) map(soil_moisture, 700, 950, 0, -1);
+  } else if (soil_moisture < 500) {
+    soil_moisture_delta = (float) map(soil_moisture, 300, 500, 0, 1);
+  } else if (soil_moisture >= 500) {
+    soil_moisture_delta = (float) map(soil_moisture, 700, 500, 0, 1);
   }
 
-  // Standard humidity preferences
+  float air_humidity_delta = 0;
   if (dhtp->humidity < 40.0f) {
-    // Air is too arid
+    air_humidity_delta = (float) map((long) dhtp->humidity, 40, 0, 0, -1);
   } else if (dhtp->humidity > 70.0f) {
-    // Air is too humid
-  } else {
-    // Air is just right
+    air_humidity_delta = (float) map((long) dhtp->humidity, 70, 100, 0, -1);
+  } else if (dhtp->humidity < 55.0f) {
+    air_humidity_delta = (float) map((long) dhtp->humidity, 40, 55, 0, 1);
+  } else if (dhtp->humidity >= 55.0f) {
+    air_humidity_delta = (float) map((long) dhtp->humidity, 70, 55, 0, 1);
   }
 
-  // Standard temp preferences
+  float air_temp_delta = 0;
   if (dhtp->temperature < 13.0f) {
-    // Air too cold
+    air_temp_delta = (float) map((long) dhtp->temperature, 13, 0, 0, -1);
   } else if (dhtp->temperature > 27.0f) {
-    // Air too hot
-  } else {
-    // Air just right
+    air_temp_delta = (float) map((long) dhtp->temperature, 27, 50, 0, -1);
+  } else if (dhtp->temperature < 20.0f) {
+    air_temp_delta = (float) map((long) dhtp->temperature, 13, 20, 0, 1);
+  } else if (dhtp->temperature >= 20.0f) {
+    air_temp_delta = (float) map((long) dhtp->temperature, 27, 20, 0, 1);
   }
 
-  state = constrain(state, 0, 100);
+  float delta = (MOISTURE_WEIGHT * soil_moisture_delta) + (HUMIDITY_WEIGHT * air_humidity_delta) + (TEMPERATURE_WEIGHT * air_temp_delta);
+
+  delta = constrain(delta, -1.0f, 1.0f);
+
+  state += delta;
+
+  state = constrain(state, 0.0f, 100.0f);
   Serial.print("Current state: ");
   Serial.println(state);
 }
