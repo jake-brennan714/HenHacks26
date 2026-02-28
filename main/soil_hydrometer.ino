@@ -1,3 +1,11 @@
+struct DHTPair {
+  float humidity;
+  float temperature;
+};
+
+DHTPair* getDHT();
+int calculateState(int prev_state, int soil_moisture, DHTPair* dhtp);
+
 #include "Adafruit_Sensor.h"
 #include "DHT.h"
 
@@ -27,30 +35,39 @@ void setupSoil() {
   dht.begin();
 }
 
-void getMoi() {
-  Serial.print("Moisture Sensor Value:");
-  Serial.println(analogRead(HYDROMETER));
+int getMoi() {
+  // Serial.print("Moisture Sensor Value:");
+  // Serial.println(analogRead(HYDROMETER));
+  return analogRead(HYDROMETER);
 }
 
-void getDHT() {
+DHTPair* getDHT() {
+  DHTPair pair;
   float h = dht.readHumidity();
   float t = dht.readTemperature();
 
   if (isnan(h) || isnan(t)) {
     Serial.println("Failed to read from DHT sensor!");
-    return;
+    pair.humidity = -1.0f;
+    pair.temperature = -1.0f;
+    return &pair;
   }
 
-  Serial.print("DHT Sensor Values: Humidity: ");
-  Serial.print(h);
-  Serial.print("; Temperature (\xC2\xB0");
-  Serial.print("C): ");
-  Serial.println(t);
+  pair.humidity = h;
+  pair.temperature = t;
+
+  return &pair;
+
+  // Serial.print("DHT Sensor Values: Humidity: ");
+  // Serial.print(h);
+  // Serial.print("; Temperature (\xC2\xB0");
+  // Serial.print("C): ");
+  // Serial.println(t);
 }
 
-int calculateState(int prevState, int soil_moisture,
-float air_humidity, float air_temp) {
-  int state = prevState;
+int calculateState(int prev_state, int soil_moisture,
+DHTPair* dhtp) {
+  int state = prev_state;
   if (soil_moisture < 300) {
     // Soil is dry.
   } else if (soil_moisture > 700) {
@@ -60,20 +77,24 @@ float air_humidity, float air_temp) {
   }
 
   // Standard humidity preferences
-  if (air_humidity < 40.0f) {
+  if (dhtp->humidity < 40.0f) {
     // Air is too arid
-  } else if (air_humidity > 70.0f) {
+  } else if (dhtp->humidity > 70.0f) {
     // Air is too humid
   } else {
     // Air is just right
   }
 
   // Standard temp preferences
-  if (air_temp < 13.0f) {
+  if (dhtp->temperature < 13.0f) {
     // Air too cold
-  } else if (air_temp > 27.0f) {
+  } else if (dhtp->temperature > 27.0f) {
     // Air too hot
   } else {
     // Air just right
   }
+
+  state = constrain(state, 0, 100);
+  Serial.print("Current state: ");
+  Serial.println(state);
 }
