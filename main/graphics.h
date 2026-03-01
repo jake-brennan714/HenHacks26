@@ -15,6 +15,7 @@ extern const int d5;
 extern const int d6;
 extern const int d7;
 
+
 // =====================
 // LCD Object
 // =====================
@@ -27,5 +28,7 @@ extern LiquidCrystal lcd;
 
 void startLCD();
 void helloWorld();
-
+void displayInfo(char* info);
+void makeBar(float percentFilled);
+void nameScreen();
 #endif
