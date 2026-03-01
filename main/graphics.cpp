@@ -43,11 +43,11 @@ void clear() {
 
 char getChar(int index) {
     static const char chars[] =
-    "abcdefghijklmnopqrstuvwxyz"
+    "_abcdefghijklmnopqrstuvwxyz"
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    "0123456789";
+    "0123456789 ";
 
-    const int size = 62;
+    const int size = 64;
 
     int wrapped = ((index % size) + size) % size;
     return chars[wrapped];
