@@ -23,5 +23,7 @@ void loop() {
   Serial.println(score);
   dtostrf(score, 6, 2, buffer);
   displayInfo(buffer);
+  makeBar(score);
   delay(2000);
+
 }
