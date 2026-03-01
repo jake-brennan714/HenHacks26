@@ -9,4 +9,4 @@ Designed to make taking care of your plants fun and engaging.
 Designed for Arduino Uno.
 
 # Wiring Diagram
-<img width="1500" height="2253" alt="circuit_image" src="https://github.com/user-attachments/assets/79a989db-29b8-4b85-a338-677b843c1da5" />
+<img width="3000" height="4506" alt="circuit_image (1)" src="https://github.com/user-attachments/assets/984861e2-f890-4508-b5be-0f775820ae39" />
