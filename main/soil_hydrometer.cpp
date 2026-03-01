@@ -1,7 +1,4 @@
-struct DHTPair {
-  float humidity;
-  float temperature;
-};
+#include "soil_hydrometer.h"
 
 DHTPair* getDHT();
 float calculateState(float prev_state, int soil_moisture, DHTPair* dhtp);
@@ -114,4 +111,6 @@ DHTPair* dhtp) {
   state = constrain(state, 0.0f, 100.0f);
   Serial.print("Current state: ");
   Serial.println(state);
+
+  return state;
 }
