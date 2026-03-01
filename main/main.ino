@@ -1,6 +1,12 @@
-// #include <Arduino.h>
-// #include <U8g2lib.h>
+#include "soil_hydrometer.h"
+#include "graphics.h"
 
+<<<<<<< HEAD
+DHTPair* pair;
+int moisture;
+float score;
+float oldScore;
+=======
 // #ifdef U8X8_HAVE_HW_SPI
 // #include <SPI.h>
 // #endif
@@ -16,24 +22,39 @@ const int rs = 11, en = 12, d4 = 6, d5 = 5, d6 = 4, d7 = 3; //initialize with LC
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
 
+>>>>>>> origin/Dan
 
 void setup(void) {
   //u8g2.begin();
   setupSoil();
+<<<<<<< HEAD
+  score = 100;
+  startLCD();
+  helloWorld();
+=======
   lcd.begin(16, 1);
   // lcd.begin(16, 1);
   lcd.clear();
   lcd.print("Test");
 
   //startLCD();
+>>>>>>> origin/Dan
 }
 
 void loop() {
   //helloWorld();
+<<<<<<< HEAD
+  moisture = getMoi();
+  pair = getDHT();
+  oldScore = score;
+  score = calculateState(oldScore, moisture, pair);
+  Serial.println(score);
+=======
   getMoi();
   getDHT();
   
   //startLCD();
   //displayGraphic("Hello! :)");
+>>>>>>> origin/Dan
   delay(2000);
 }
