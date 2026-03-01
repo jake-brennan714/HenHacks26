@@ -1,8 +1,9 @@
 import serial
 import time
-
+# Serial monitor, used as a debugging tool since the Arduino IDE broke on my laptop
+# Q.Q
 PORT = '/dev/ttyACM0'
-BAUD = 57600
+BAUD = 9600
 
 ser = serial.Serial(
     port=PORT,
