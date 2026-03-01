@@ -1,4 +1,5 @@
 #include "soil_hydrometer.h"
+#include "graphics.h"
 
 DHTPair* pair;
 int moisture;
@@ -9,6 +10,8 @@ void setup(void) {
   //u8g2.begin();
   setupSoil();
   score = 100;
+  startLCD();
+  helloWorld();
 }
 
 void loop() {
