@@ -98,8 +98,8 @@ void loop() {
     dtostrf(score, 6, 2, buffer);
     //displayInfo(buffer);
     char line[20];
-  snprintf(line, sizeof(line), "%s's HP:", name);
-  displayInfo(line);
+    snprintf(line, sizeof(line), "%s's HP:", name);
+    displayInfo(line);
     makeBar(score);
     delay(2000);
   }
@@ -111,6 +111,10 @@ void loop() {
     }
       for (int i = 0; i < NAME_LEN; i++) {
       name[i] = getChar(nameNum[i]);
+      if (name[i] == '_') {
+        name[i] = '\0';
+        break;
+      }
     }
     name[NAME_LEN - 1] = '\0'; // Null terminate so it's a proper C-string
     menu = 0;
