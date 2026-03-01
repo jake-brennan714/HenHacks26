@@ -1,25 +1,22 @@
-// #include <Arduino.h>
-// #include <U8g2lib.h>
 
-// #ifdef U8X8_HAVE_HW_SPI
-// #include <SPI.h>
-// #endif
-// #ifdef U8X8_HAVE_HW_I2C
-// #include <Wire.h>
-// #endif
 
-//#define SENSOR 0
-
-// U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);
+DHTPair pair;
+int moisture;
+float score;
+float oldScore;
 
 void setup(void) {
   //u8g2.begin();
   setupSoil();
+  score = 100;
 }
 
 void loop() {
   //helloWorld();
-  getMoi();
-  getDHT();
+  moisture = getMoi();
+  pair = getDHT();
+  oldScore = score;
+  score = calculateState(oldScore, moisture, pair);
+  Serial.println();
   delay(2000);
 }
