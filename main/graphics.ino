@@ -1,7 +1,25 @@
-void helloWorld(void) {
-  u8g2.clearBuffer();					// clear the internal memory
-  u8g2.setFont(u8g2_font_ncenB08_tr);	// choose a suitable font
-  u8g2.drawStr(0,10,"Hello World!");	// write something to the internal memory
-  u8g2.sendBuffer();					// transfer internal memory to the display
-  delay(1000);  
+#include <LiquidCrystal.h>
+
+//const int rs = 12, en = 11, d4 = 6, d5 = 5, d6 = 4, d7 = 3; //initialize with LCD interface pins.
+//LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+/*
+void displayGraphic(char* info) {
+  
+  char* message = lcd.print(info);
+
+  //return message;
 }
+*/
+/*
+void startLCD() {
+  lcd.begin(16, 2); //setup lcd columns/rows.
+  lcd.print("Test");
+}
+*/
+/*
+void _loop() {
+   lcd.setCursor(0, 1);
+  //print the number of seconds since reset:
+  lcd.print(millis() / 1000);
+}
+*/
