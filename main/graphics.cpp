@@ -2,6 +2,8 @@
 #include <Arduino.h>
 #include <LiquidCrystal.h>
 
+
+
 const int rs = 11;
 const int en = 12;
 const int d4 = 6;
@@ -16,8 +18,9 @@ void startLCD() {
   lcd.clear();
 }
 
-void displayInfo(char* info) {
-  lcd.clear();
+void displayInfo(char* info, int x = 0, int y = 0) {
+  //lcd.clear();
+  lcd.setCursor(x,y);
   lcd.print(info);
 }
 
@@ -34,7 +37,23 @@ void makeBar(float percentFilled) {
   }
 }
 
-void nameScreen() {
-  
+void clear() {
+  lcd.clear();
+}
 
+char getChar(int index) {
+    static const char chars[] =
+    "abcdefghijklmnopqrstuvwxyz"
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    "0123456789";
+
+    const int size = 62;
+
+    int wrapped = ((index % size) + size) % size;
+    return chars[wrapped];
+}
+
+void writeCharToLoc(char charater, int x, int y) {
+  lcd.setCursor(x, y);
+  lcd.write(charater);
 }

@@ -18,3 +18,15 @@ void initJoystick() {
   value1 = 0;
   value2 = 0;
 }
+
+int pollX() {
+  return analogRead(joyX);
+}
+
+int pollY() {
+  return analogRead(joyY);
+}
+
+bool pollB() {
+  return (bool)digitalRead(joyBtn);
+}
