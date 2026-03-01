@@ -10,5 +10,8 @@ extern int value1;                  // variable to read the value from the analo
 extern int value2;                  // variable to read the value from the analog pin 1
 
 void initJoystick();
+int pollX();
+int pollY();
+bool pollB();
 
 #endif

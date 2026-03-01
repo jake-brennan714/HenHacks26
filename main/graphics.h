@@ -28,7 +28,10 @@ extern LiquidCrystal lcd;
 
 void startLCD();
 void helloWorld();
-void displayInfo(char* info);
+void displayInfo(char* info, int x = 0, int y = 0);
 void makeBar(float percentFilled);
 void nameScreen();
+void clear();
+char getChar(int index);
+void writeCharToLoc(char charater, int x, int y);
 #endif
