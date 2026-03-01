@@ -27,5 +27,5 @@ extern LiquidCrystal lcd;
 
 void startLCD();
 void helloWorld();
-
+void displayInfo(char* info);
 #endif

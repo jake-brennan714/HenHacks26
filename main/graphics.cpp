@@ -14,6 +14,7 @@ void startLCD() {
   lcd.clear();
 }
 
-void helloWorld() {
-  lcd.print("Hello World.");
+void displayInfo(char* info) {
+  lcd.clear();
+  lcd.print(info);
 }
