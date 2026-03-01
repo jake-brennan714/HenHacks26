@@ -97,7 +97,9 @@ void loop() {
     Serial.println(score);
     dtostrf(score, 6, 2, buffer);
     //displayInfo(buffer);
-    displayInfo(String(name) + "'s HP:");
+    char line[20];
+  snprintf(line, sizeof(line), "%s's HP:", name);
+  displayInfo(line);
     makeBar(score);
     delay(2000);
   }
