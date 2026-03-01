@@ -1,6 +1,6 @@
+#include "soil_hydrometer.h"
 
-
-DHTPair pair;
+DHTPair* pair;
 int moisture;
 float score;
 float oldScore;
@@ -17,6 +17,6 @@ void loop() {
   pair = getDHT();
   oldScore = score;
   score = calculateState(oldScore, moisture, pair);
-  Serial.println();
+  Serial.println(score);
   delay(2000);
 }

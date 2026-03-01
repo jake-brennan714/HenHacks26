@@ -111,4 +111,6 @@ DHTPair* dhtp) {
   state = constrain(state, 0.0f, 100.0f);
   Serial.print("Current state: ");
   Serial.println(state);
+
+  return state;
 }
