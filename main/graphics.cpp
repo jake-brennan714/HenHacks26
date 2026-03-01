@@ -33,3 +33,8 @@ void makeBar(float percentFilled) {
     lcd.write(0xfc);
   }
 }
+
+void nameScreen() {
+  
+
+}
